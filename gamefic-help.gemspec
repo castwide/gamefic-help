@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency 'gamefic', '~> 3.0'
 
+  spec.add_development_dependency 'opal-rspec', '~> 1.0'
+  spec.add_development_dependency 'opal-sprockets', '~> 1.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'simplecov', '~> 0.14'
 

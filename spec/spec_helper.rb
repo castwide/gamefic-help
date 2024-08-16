@@ -2,8 +2,7 @@
 
 require 'simplecov'
 SimpleCov.start
-
-require "gamefic/help"
+require_relative 'shared_helper'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

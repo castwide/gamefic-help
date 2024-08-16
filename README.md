@@ -1,24 +1,57 @@
 # Gamefic::Help
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gamefic/help`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+A Gamefic extension to implement help commands.
 
 ## Usage
 
-TODO: Write usage instructions here
+Add the gem to your project's Gemfile:
+
+```ruby
+gem 'gamefic-help'
+```
+
+Include the `Gamefic::Remarkable` module in your project's `Plot`:
+
+```ruby
+module MyGame
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+    include Gamefic::Help
+
+    # ...
+  end
+end
+```
+
+In the game, the `help` command will provide some basic instructions and a list of known verbs (and verb synonyms). Players can request more information about a verb by entering `help [verb]`.
+
+Authors can add an explanation for a verb with the `explain` method:
+
+```ruby
+module MyGame
+  class Plot < Gamefic::Plot
+    include Gamefic::Help
+
+    script do
+      respond :think do |actor|
+        actor.tell 'You ponder your predicament.'
+      end
+
+      explain :think, 'Take a moment to ponder your predicament.'
+    end
+  end
+end
+```
+
+Example of gameplay:
+
+    > help
+
+    I understand the following commands: think.
+
+    > help think
+
+    Take a moment to ponder your predicament.
 
 ## Development
 

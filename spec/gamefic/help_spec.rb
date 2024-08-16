@@ -11,6 +11,13 @@ RSpec.describe Gamefic::Help do
         respond(:bar) {}
 
         explain :foo, 'Foo all the stuff.'
+
+        respond(:baz) {}
+
+        explain :baz, 'Baz all the stuff.'
+
+        interpret 'synonym foo', 'foo'
+        interpret 'synonym baz', 'baz'
       end
     end
     .new
@@ -53,5 +60,14 @@ RSpec.describe Gamefic::Help do
   it 'includes explanations' do
     player.perform 'help foo'
     expect(player.messages).to include('Foo all the stuff.')
+  end
+
+  it 'lists multiple explanations and examples for synonyms' do
+    player.perform 'help synonym'
+    expect(player.messages).to include('Foo all the stuff.')
+    expect(player.messages).to include('Baz all the stuff.')
+    expect(player.messages).to include('Examples:')
+    expect(player.messages).to include('synonym foo')
+    expect(player.messages).to include('synonym baz')
   end
 end

@@ -7,18 +7,15 @@ module Gamefic
   module Help
     extend Gamefic::Scriptable
 
-    # Request or set an explanation for a verb the plot understands.
+    # Get or set an explanation for a verb the plot understands.
     #
     # @param verb [Symbol]
     # @param description [String, nil]
     # @return [String, nil]
     def explain verb, description = nil
-      verb_explanations[verb] = description unless description.nil?
-      verb_explanations[verb]
-    end
-
-    def verb_explanations
-      @verb_explanations ||= {}
+      @gamefic_help_verb_explanations ||= {}
+      @gamefic_help_verb_explanations[verb] = description unless description.nil?
+      @gamefic_help_verb_explanations[verb]
     end
 
     script do
@@ -46,11 +43,11 @@ module Gamefic
           if explanations.one?
             actor.tell explanations.first
           elsif explanations.any?
-            actor.stream '<ui>'
+            actor.stream '<ul>'
             explanations.each do |expl|
               actor.stream "<li>#{expl}</li>"
             end
-            actor.stream '</ui>'
+            actor.stream '</ul>'
           end
 
           examples = available.map(&:template)

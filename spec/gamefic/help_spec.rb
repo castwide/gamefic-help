@@ -9,6 +9,8 @@ RSpec.describe Gamefic::Help do
         respond(:foo) {}
 
         respond(:bar) {}
+
+        explain :foo, 'Foo all the stuff.'
       end
     end
     .new
@@ -33,8 +35,23 @@ RSpec.describe Gamefic::Help do
   it 'displays command details' do
     plot.rulebook.synonyms.each do |syn|
       player.perform "help #{syn}"
-      expect(player.messages).to include('Examples:')
+      expect(player.messages).to include(syn.to_s)
       player.flush
     end
+  end
+
+  it 'asks for a simple command' do
+    player.perform 'help me do a thing'
+    expect(player.messages).to include('specific command')
+  end
+
+  it 'reports unknown verbs' do
+    player.perform 'help unknown'
+    expect(player.messages).to include('not a verb I understand')
+  end
+
+  it 'includes explanations' do
+    player.perform 'help foo'
+    expect(player.messages).to include('Foo all the stuff.')
   end
 end
